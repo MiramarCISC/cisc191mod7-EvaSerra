@@ -38,10 +38,26 @@
     </top>
 
     <center>
-        <TextArea fx:id="matchLog"
-                  editable="false"
-                  wrapText="true"
-                  promptText="Match events will appear here..." />
+        <VBox style="-fx-padding: 12; -fx-background-color: #f8f8f8;">
+            <TextArea fx:id="matchLog"
+                      editable="false"
+                      wrapText="true"
+                      promptText="Match events will appear here..." />
+
+            <HBox spacing="20">
+                <Button text="Attack" onAction="#handleAttack"/>
+                <Button text="Block" onAction="#handleBlock"/>
+                <Button text="Heal" onAction="#handleHeal" />
+                <Button text="Special" onAction="#handleSpecial"/>
+            </HBox>
+
+            <VBox style="-fx-padding: 12; -fx-background-color: #f8f8f8;">
+                <Label fx:id="hpLabel"
+                       text="Player Hp: 10" />
+            </VBox>
+
+        </VBox>
+
     </center>
 
     <bottom>

@@ -13,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+import java.util.Random;
+
 public class GameController {
 
     @FXML
@@ -38,6 +40,9 @@ public class GameController {
 
     @FXML
     private CheckBox rankedMatchCheckBox;
+
+    @FXML
+    private Label hpLabel;
 
     private final MatchViewModel match = new MatchViewModel();
 
@@ -184,11 +189,46 @@ public class GameController {
         } else {
             winnerLabel.setText("Winner: " + match.getWinnerName());
         }
+        hpLabel.setText("Player Hp: " + match.getPlayer().getHp());
     }
 
     private void runInBackground(Task<?> task) {
         Thread thread = new Thread(task);
         thread.setDaemon(true);
         thread.start();
+    }
+
+    public void handleHeal(){
+        Random rand = new Random();
+        // Heals Player between 0 and 10 points
+            if (!match.canPlayMatch()) {
+                matchLog.appendText("Join a match before healing\n");
+                return;
+            }
+        match.getPlayer().setHp(match.getPlayer().getHp()+ rand.nextInt(10) + 1);
+    }
+
+    public void handleAttack(){
+    Random random = new Random();
+    //Deals between 1 and 5 damage
+        if (!match.canPlayMatch()) {
+            matchLog.appendText("Join a match before attacking\n");
+            return;
+        }
+    match.getOpponent().setHp(match.getOpponent().getHp() - random.nextInt(5) - 1);
+    }
+
+    public void handleBlock(){
+
+    }
+
+    public void handleSpecial(){
+        Random random = new Random();
+        if (match.canUseSpecialMove()) {
+            //Deals between 5 and 10 damage
+            match.getOpponent().setHp(match.getOpponent().getHp() - random.nextInt(6) - 5);
+            return;
+        }
+        matchLog.appendText("Can't Use Special\n");
     }
 }
