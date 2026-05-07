@@ -47,6 +47,10 @@ public class MatchViewModel {
         return hasJoinedMatch() && !matchOver;
     }
 
+    public boolean canUseSpecialMove() {
+        return hasJoinedMatch() && !matchOver && opponent.getHp() > 0;
+    }
+
     public void resetLocalState() {
         matchId = null;
         player.setName("Player");
